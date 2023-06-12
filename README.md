@@ -31,4 +31,7 @@ While providing the interactive environment...
 
 We will analyze your responses and predict your state. 
 These predictions will be sent to the counselor
-It will interact the 
+It will help the counselor to take decisions.
+
+There is more...
+You can help a friend who is struggling by alerting the counselor
