@@ -2,34 +2,26 @@ package com.cookiebytes.calmquest.student;
 
 import com.cookiebytes.calmquest.appointment.Appointment;
 import com.cookiebytes.calmquest.counselor.Counselor;
+import com.cookiebytes.calmquest.user.User;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Data
-@Builder
+@SuperBuilder
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Hidden
+public class Student extends User {
 
-    private long id;
-
-    private String firstName;
-    private String lastName;
-
-    private String gender;
-    @Column(unique = true)
-    private String email;
     @Column(unique = true)
     private String studentRegistrationNumber;
 
@@ -43,10 +35,10 @@ public class Student {
     @JoinColumn(name = "counselor_id")
 
     private Counselor counselor;
-
-    @OneToMany(mappedBy = "student")
-
-    private List<Appointment> appointments;
+//
+//    @OneToMany(mappedBy = "student")
+//
+//    private List<Appointment> appointments;
 
 
 

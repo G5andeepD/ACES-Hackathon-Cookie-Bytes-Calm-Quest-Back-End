@@ -1,5 +1,4 @@
-package com.cookiebytes.calmquest.student;
-
+package com.cookiebytes.calmquest.counselor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentCreateRequest {
-
-
+public class CounselorCreateRequest {
     private String firstName;
 
 
@@ -24,14 +21,7 @@ public class StudentCreateRequest {
 
     private String email;
 
-
-    private String studentRegistrationNumber;
-
-
-    private String faculty;
-
-
-    private String university;
+    private String workplace;
 
 
 

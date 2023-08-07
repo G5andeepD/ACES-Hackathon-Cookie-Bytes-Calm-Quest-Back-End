@@ -22,11 +22,11 @@ private final StudentRepository studentRepository;
         return counselorRepository.findAll();
     }
 
-    public List<Student> getStudentsByCounselorId(long id) {
+    public List<Student> getStudentsByCounselorId(int id) {
         return  studentRepository.getStudentsByCounselor(counselorRepository.findById(id));
     }
 
-    public Optional<Counselor> getCounselorById(long id) {
+    public Optional<Counselor> getCounselorById(int id) {
         return counselorRepository.findById(id);
 
     }
@@ -36,12 +36,12 @@ private final StudentRepository studentRepository;
         return counselorRepository.save(counselor);
     }
 
-    public Counselor updateCounselorById(Counselor counselor, long id) {
+    public Counselor updateCounselorById(Counselor counselor, int id) {
         counselor.setId(id);
         return counselorRepository.save(counselor);
     }
 
-    public boolean deleteCounselorById(long id) {
+    public boolean deleteCounselorById(int id) {
         counselorRepository.deleteById(id);
         return false;
     }

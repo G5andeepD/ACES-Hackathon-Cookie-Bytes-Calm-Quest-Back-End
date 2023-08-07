@@ -20,18 +20,18 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Optional<Student> getStudentById(long id){
+    public Optional<Student> getStudentById(int id){
         return studentRepository.findById(id);
     }
 
     public Student createStudent(Student student){
         return studentRepository.save(student);
     }
-    public Student updateStudentById(Student student,long id){
+    public Student updateStudentById(Student student,int id){
         student.setId(id);
         return studentRepository.save(student);
     }
-    public boolean deleteStudentById(long id){
+    public boolean deleteStudentById(int id){
 
         studentRepository.deleteById(id);
         return false;
@@ -48,7 +48,7 @@ public class StudentService {
         return studentRepository.findStudentsByUniversityAndFaculty(university,faculty);
     }
 
-    public Student setStudentCounselor(long id, long counselorid) {
+    public Student setStudentCounselor(int id, int counselorid) {
         Student student = studentRepository.findById(id).get();
         student.setCounselor(counselorRepository.findById(counselorid).get());
         studentRepository.save(student);

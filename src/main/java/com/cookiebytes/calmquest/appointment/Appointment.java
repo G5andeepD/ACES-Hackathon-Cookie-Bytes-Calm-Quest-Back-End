@@ -8,7 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +19,7 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private long id;
+    private Integer id;
     @ManyToOne
     @JoinColumn(name = "student_id")
     @Hidden
@@ -28,9 +29,9 @@ public class Appointment {
     @Hidden
     private Counselor counselor;
 
-    private Date placementDateTime;
+    private LocalDateTime placementDateTime;
 
-    private Date scheduledDateTime;
+    private LocalDateTime scheduledDateTime;
 
     private String type;
 

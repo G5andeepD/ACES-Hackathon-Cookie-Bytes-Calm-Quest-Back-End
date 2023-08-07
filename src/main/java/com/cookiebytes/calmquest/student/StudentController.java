@@ -1,22 +1,27 @@
 package com.cookiebytes.calmquest.student;
 
 
+import com.cookiebytes.calmquest.user.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("api/v1/admin/student")
 public class StudentController {
 
     private final StudentService studentService;
 
+    private final PasswordEncoder passwordEncoder;
 
-    public StudentController(StudentService studentService) {
+
+    public StudentController(StudentService studentService, PasswordEncoder passwordEncoder) {
         this.studentService = studentService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -34,7 +39,7 @@ public class StudentController {
     }
 
     @GetMapping("id/{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable long id) {
+    public ResponseEntity<Student> getStudentById(@PathVariable int id) {
         Optional<Student> student = studentService.getStudentById(id);
         if (student != null) {
             return new ResponseEntity<>(student.get(), HttpStatus.OK);
@@ -63,10 +68,14 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody StudentCreateRequest request) {
+
+
         Student newStudent = Student.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
+                .firstname(request.getFirstName())
+                .lastname(request.getLastName())
                 .gender(request.getGender())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.STUDENT)
                 .email(request.getEmail())
                 .studentRegistrationNumber(request.getStudentRegistrationNumber())
                 .faculty(request.getFaculty())
@@ -77,7 +86,7 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable long id, @RequestBody Student student) {
+    public ResponseEntity<Student> updateStudent(@PathVariable int id, @RequestBody Student student) {
         Student updatedStudent = studentService.updateStudentById(student,id);
         if (updatedStudent != null) {
             return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
@@ -89,7 +98,7 @@ public class StudentController {
 
 
     @PutMapping("/{id}/{counselorid}")
-    public ResponseEntity<Student> setStudentCounselor(@PathVariable long id, @PathVariable long counselorid){
+    public ResponseEntity<Student> setStudentCounselor(@PathVariable int id, @PathVariable int counselorid){
         Student updatedStudent = studentService.setStudentCounselor(id,counselorid);
         if (updatedStudent != null) {
             return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
@@ -110,7 +119,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable long id ) {
+    public ResponseEntity<Void> deleteStudent(@PathVariable int id ) {
         boolean deleted = studentService.deleteStudentById(id);
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

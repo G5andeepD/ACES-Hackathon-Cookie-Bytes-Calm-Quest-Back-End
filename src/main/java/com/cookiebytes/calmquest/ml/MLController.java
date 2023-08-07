@@ -5,7 +5,7 @@
 //import org.springframework.web.multipart.MultipartFile;
 //
 //@RestController
-//@RequestMapping("ml/demo")
+//@RequestMapping("api/v1/ml")
 //public class MLController {
 //    private final MLClient mlClient;
 //

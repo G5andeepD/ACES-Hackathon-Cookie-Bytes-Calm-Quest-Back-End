@@ -20,7 +20,7 @@ public class AppointmentService {
         return appointmentRepository.findAll();
     }
 
-    public Appointment getAppointmentById(long id) {
+    public Appointment getAppointmentById(int id) {
         return appointmentRepository.findById(id).orElse(null);
     }
 
@@ -28,7 +28,7 @@ public class AppointmentService {
         return appointmentRepository.save(appointment);
     }
 
-    public Appointment updateAppointment(long id, Appointment appointment) {
+    public Appointment updateAppointment(int id, Appointment appointment) {
         if (appointmentRepository.existsById(id)) {
             appointment.setId(id);
             return appointmentRepository.save(appointment);
@@ -36,7 +36,7 @@ public class AppointmentService {
         return null;
     }
 
-    public boolean deleteAppointment(long id) {
+    public boolean deleteAppointment(int id) {
         if (appointmentRepository.existsById(id)) {
             appointmentRepository.deleteById(id);
             return true;
