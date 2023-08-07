@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/appointments")
+@RequestMapping("api/v1/admin/appointment")
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
@@ -27,7 +27,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Appointment> getAppointmentById(@PathVariable("id") long id) {
+    public ResponseEntity<Appointment> getAppointmentById(@PathVariable("id") int id) {
         Appointment appointment = appointmentService.getAppointmentById(id);
         if (appointment != null) {
             return new ResponseEntity<>(appointment, HttpStatus.OK);
@@ -43,7 +43,7 @@ public class AppointmentController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Appointment> updateAppointment(
-            @PathVariable("id") long id,
+            @PathVariable("id") int id,
             @RequestBody Appointment appointment
     ) {
         Appointment updatedAppointment = appointmentService.updateAppointment(id, appointment);
@@ -54,7 +54,7 @@ public class AppointmentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAppointment(@PathVariable("id") long id) {
+    public ResponseEntity<Void> deleteAppointment(@PathVariable("id") int id) {
         boolean deleted = appointmentService.deleteAppointment(id);
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
