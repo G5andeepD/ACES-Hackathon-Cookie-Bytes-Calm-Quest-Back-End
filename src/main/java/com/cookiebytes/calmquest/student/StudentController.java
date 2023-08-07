@@ -1,8 +1,10 @@
 package com.cookiebytes.calmquest.student;
 
 
+import com.cookiebytes.calmquest.user.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,9 +16,12 @@ public class StudentController {
 
     private final StudentService studentService;
 
+    private final PasswordEncoder passwordEncoder;
 
-    public StudentController(StudentService studentService) {
+
+    public StudentController(StudentService studentService, PasswordEncoder passwordEncoder) {
         this.studentService = studentService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -63,10 +68,14 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody StudentCreateRequest request) {
+
+
         Student newStudent = Student.builder()
                 .firstname(request.getFirstName())
                 .lastname(request.getLastName())
                 .gender(request.getGender())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.STUDENT)
                 .email(request.getEmail())
                 .studentRegistrationNumber(request.getStudentRegistrationNumber())
                 .faculty(request.getFaculty())

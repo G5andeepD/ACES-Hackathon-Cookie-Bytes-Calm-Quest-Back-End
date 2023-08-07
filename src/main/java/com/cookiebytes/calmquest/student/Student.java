@@ -22,11 +22,6 @@ import java.util.List;
 @Table
 public class Student extends User {
 
-
-
-
-    private String gender;
-
     @Column(unique = true)
     private String studentRegistrationNumber;
 

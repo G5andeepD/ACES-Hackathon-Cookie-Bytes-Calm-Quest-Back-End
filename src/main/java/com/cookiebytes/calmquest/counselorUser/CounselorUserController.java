@@ -68,4 +68,9 @@ public class CounselorUserController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    //TODO
+    //Create CounselorAppointmentResponse
+    //Create CounselorUserResponse
+    //Create CounselorStudentResponse
 }
