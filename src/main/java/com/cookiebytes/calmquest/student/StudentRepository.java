@@ -12,4 +12,6 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
     public List<Student> findStudentsByUniversityAndFaculty(String university,String faculty);
 
     public List<Student> getStudentsByCounselor(Optional<Counselor> counselor);
+
+    List<Student> findStudentsByCounselor(Counselor counselor);
 }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/counselor")
+@RequestMapping("api/v1/admin/counselor")
 public class CounselorController {
 
     private final CounselorService counselorService;

@@ -19,9 +19,9 @@ import java.util.List;
 public class Counselor extends User {
 
     private String workplace;
-    @OneToMany(mappedBy = "counselor")
-    private List<Student> students;
-    @OneToMany(mappedBy = "counselor")
-    private List<Appointment> appointments;
+//    @OneToMany(mappedBy = "counselor")
+//    private List<Student> students;
+//    @OneToMany(mappedBy = "counselor")
+//    private List<Appointment> appointments;
 
 }

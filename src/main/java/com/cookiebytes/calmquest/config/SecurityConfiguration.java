@@ -63,10 +63,30 @@ public class SecurityConfiguration {
                 //What Admins Can Access
                 .requestMatchers("/api/v1/admin/**").hasRole(ADMIN.name())
 
-                 .requestMatchers(GET, "/api/v1/admin/**").hasAuthority(ADMIN_READ.name())
-                 .requestMatchers(POST, "/api/v1/admin/**").hasAuthority(ADMIN_CREATE.name())
-                 .requestMatchers(PUT, "/api/v1/admin/**").hasAuthority(ADMIN_UPDATE.name())
-                 .requestMatchers(DELETE, "/api/v1/admin/**").hasAuthority(ADMIN_DELETE.name())
+                 .requestMatchers(GET, "/api/v1/admin/**").
+                        hasAuthority(ADMIN_READ.name())
+                 .requestMatchers(POST, "/api/v1/admin/**").
+                        hasAuthority(ADMIN_CREATE.name())
+                 .requestMatchers(PUT, "/api/v1/admin/**").
+                        hasAuthority(ADMIN_UPDATE.name())
+                 .requestMatchers(DELETE, "/api/v1/admin/**").
+                        hasAuthority(ADMIN_DELETE.name())
+
+                //What Counselors Can Access
+                .requestMatchers("/api/v1/counselor/**").hasAnyRole(ADMIN.name(),COUNSELOR.name())
+                .requestMatchers(GET, "/api/v1/counselor/**").hasAnyAuthority(ADMIN_READ.name(), COUNSELOR_READ.name())
+                .requestMatchers(POST, "/api/v1/counselor/**").hasAnyAuthority(ADMIN_CREATE.name(), COUNSELOR_CREATE.name())
+                .requestMatchers(PUT, "/api/v1/counselor/**").hasAnyAuthority(ADMIN_UPDATE.name(), COUNSELOR_UPDATE.name())
+                .requestMatchers(DELETE, "/api/v1/counselor/**").hasAnyAuthority(ADMIN_DELETE.name(), COUNSELOR_DELETE.name())
+
+                //What Students Can Access
+                .requestMatchers("/api/v1/student/**").hasAnyRole(ADMIN.name(), STUDENT.name())
+                .requestMatchers(GET, "/api/v1/student/**").hasAnyAuthority(ADMIN_READ.name(), STUDENT_READ.name())
+                .requestMatchers(POST, "/api/v1/student/**").hasAnyAuthority(ADMIN_CREATE.name(), STUDENT_CREATE.name())
+                .requestMatchers(PUT, "/api/v1/student/**").hasAnyAuthority(ADMIN_UPDATE.name(), STUDENT_UPDATE.name())
+                .requestMatchers(DELETE, "/api/v1/student/**").hasAnyAuthority(ADMIN_DELETE.name(), STUDENT_DELETE.name())
+
+
 
 
                 .anyRequest()

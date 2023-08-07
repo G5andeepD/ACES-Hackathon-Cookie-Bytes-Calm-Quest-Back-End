@@ -40,10 +40,10 @@ public class Student extends User {
     @JoinColumn(name = "counselor_id")
 
     private Counselor counselor;
-
-    @OneToMany(mappedBy = "student")
-
-    private List<Appointment> appointments;
+//
+//    @OneToMany(mappedBy = "student")
+//
+//    private List<Appointment> appointments;
 
 
 
