@@ -25,13 +25,13 @@ public class CounselorController {
     }
 
     @GetMapping("/{id}/getyourstudents")
-    public ResponseEntity<List<Student>> getStudentsByCounselorId(@PathVariable long id){
+    public ResponseEntity<List<Student>> getStudentsByCounselorId(@PathVariable int id){
         List<Student> students = counselorService.getStudentsByCounselorId(id);
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Counselor> getCounselorById(@PathVariable long id) {
+    public ResponseEntity<Counselor> getCounselorById(@PathVariable int id) {
         Optional<Counselor> student = counselorService.getCounselorById(id);
         if (student != null) {
             return new ResponseEntity<>(student.get(), HttpStatus.OK);
@@ -49,7 +49,7 @@ public class CounselorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Counselor> updateStudent(@PathVariable long id, @RequestBody Counselor student) {
+    public ResponseEntity<Counselor> updateStudent(@PathVariable int id, @RequestBody Counselor student) {
 
         Counselor updatedStudent = counselorService.updateCounselorById(student,id);
         if (updatedStudent != null) {
@@ -60,7 +60,7 @@ public class CounselorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable long id) {
+    public ResponseEntity<Void> deleteStudent(@PathVariable int id) {
         boolean deleted = counselorService.deleteCounselorById(id);
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
