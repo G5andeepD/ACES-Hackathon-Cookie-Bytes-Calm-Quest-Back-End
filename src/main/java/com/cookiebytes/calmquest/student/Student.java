@@ -29,6 +29,8 @@ public class Student extends User {
 
     private String university;
 
+    private String contactNumber;
+
 
     private int alertCount;
     @ManyToOne

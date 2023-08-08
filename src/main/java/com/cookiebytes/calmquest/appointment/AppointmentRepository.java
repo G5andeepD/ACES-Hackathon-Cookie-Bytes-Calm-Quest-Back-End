@@ -12,4 +12,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Integer
     List<Appointment> getAppointmentsByCounselor(Counselor counselor);
 
     List<Appointment> getAppointmentsByCounselorAndStudent(Counselor counselor, Student student);
+
+    List<Appointment> getAppointmentsByStudent(Student student);
 }
