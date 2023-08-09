@@ -29,7 +29,11 @@ import io.swagger.v3.oas.annotations.servers.Server;
         servers = {
                 @Server(
                         description = "Local ENV",
-                        url = "http://localhost:8080"
+                        url = "http://localhost:5000"
+                ),
+                @Server(
+                        description = "AWS Server",
+                        url = "http://calmquest3-env.eba-xpptjidz.eu-north-1.elasticbeanstalk.com"
                 )
         },
 
