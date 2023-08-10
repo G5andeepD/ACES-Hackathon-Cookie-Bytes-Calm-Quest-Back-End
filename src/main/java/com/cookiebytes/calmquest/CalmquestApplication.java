@@ -15,17 +15,17 @@ public class CalmquestApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CalmquestApplication.class, args);
 	}
-@Bean
-	public CommandLineRunner commandLineRunner(MessageRepository messageRepository){
-		return args -> {
-			messageRepository.save(new Message(0L, "sad", "Better days are ahead!"));
-			messageRepository.save(new Message(0L, "fear", "Fear to growth, embrace it!"));
-			messageRepository.save(new Message(0L, "happy", "Happiness spreads, be contagiously joyful!"));
-			messageRepository.save(new Message(0L, "angry", "Anger fuels determination, achieve greatness!"));
-			messageRepository.save(new Message(0L, "neutral", "Make each day positively impactful!"));
-
-
-				};
-	}
-
+//@Bean
+//	public CommandLineRunner commandLineRunner(MessageRepository messageRepository){
+//		return args -> {
+//			messageRepository.save(new Message(0L, "sad", "Better days are ahead!"));
+//			messageRepository.save(new Message(0L, "fear", "Fear to growth, embrace it!"));
+//			messageRepository.save(new Message(0L, "happy", "Happiness spreads, be contagiously joyful!"));
+//			messageRepository.save(new Message(0L, "angry", "Anger fuels determination, achieve greatness!"));
+//			messageRepository.save(new Message(0L, "neutral", "Make each day positively impactful!"));
+//
+//
+//				};
+//	}
+//
 }

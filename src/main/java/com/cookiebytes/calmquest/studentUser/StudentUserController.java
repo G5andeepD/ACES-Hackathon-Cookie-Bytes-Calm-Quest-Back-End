@@ -1,14 +1,18 @@
 package com.cookiebytes.calmquest.studentUser;
 
 import com.cookiebytes.calmquest.appointment.Appointment;
+import com.cookiebytes.calmquest.ml.EmotionResponseDTO;
+import com.cookiebytes.calmquest.ml.TextSentimentRequest;
 import com.cookiebytes.calmquest.student.Student;
 import com.cookiebytes.calmquest.student.StudentService;
 import com.cookiebytes.calmquest.studentUser.responses.StudentAppointmentResponse;
 import com.cookiebytes.calmquest.studentUser.responses.StudentCounselorResponse;
 import com.cookiebytes.calmquest.studentUser.responses.StudentDetailResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 @RestController
@@ -78,6 +82,19 @@ public class StudentUserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    //AI Data
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,path = "/ml/image")
+    public void uploadImage(@RequestParam("face") MultipartFile imageFile){
+        studentUserService.analyzeImage(imageFile);
+    }
+
+    @PostMapping("/ml/text")
+
+    public void uploadText(@RequestBody TextSentimentRequest textSentimentRequest){
+        studentUserService.analyzeText(textSentimentRequest);
     }
 
 

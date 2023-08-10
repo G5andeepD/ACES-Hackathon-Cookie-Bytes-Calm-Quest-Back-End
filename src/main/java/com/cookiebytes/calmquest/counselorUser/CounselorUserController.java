@@ -6,6 +6,8 @@ import com.cookiebytes.calmquest.counselorUser.responses.CounselorAppointmentRes
 import com.cookiebytes.calmquest.counselorUser.responses.CounselorDetailResponse;
 import com.cookiebytes.calmquest.counselorUser.responses.CounselorStudentResponse;
 
+import com.cookiebytes.calmquest.ml.StudentFaceEmotion;
+import com.cookiebytes.calmquest.ml.StudentTextEmotion;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +72,21 @@ public class CounselorUserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    //AI Insights
+
+    @GetMapping("/student/ml/face/{student_id}")
+    public ResponseEntity<List<StudentFaceEmotion>>
+        getFaceEmotionInsightsByStudentId(@PathVariable("student_id") int studentId){
+        List<StudentFaceEmotion> studentFaceEmotions = counselorUserService.getFaceEmotionInsightsByStudentId(studentId);
+        return new ResponseEntity<>(studentFaceEmotions, HttpStatus.OK);
+    }
+
+    @GetMapping("/student/ml/text/{student_id}")
+    public ResponseEntity<List<StudentTextEmotion>> getEmotionInsightsByStudentId(@PathVariable("student_id") int studentId) {
+        List<StudentTextEmotion> studentTextEmotionList = counselorUserService.getTextEmotionInsightsByStudentId(studentId);
+        return new ResponseEntity<>(studentTextEmotionList, HttpStatus.OK);
     }
 
 

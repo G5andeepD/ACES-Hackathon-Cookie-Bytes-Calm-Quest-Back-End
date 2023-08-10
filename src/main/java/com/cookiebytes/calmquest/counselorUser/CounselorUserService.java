@@ -7,6 +7,10 @@ import com.cookiebytes.calmquest.counselor.CounselorRepository;
 import com.cookiebytes.calmquest.counselorUser.responses.CounselorAppointmentResponse;
 import com.cookiebytes.calmquest.counselorUser.responses.CounselorDetailResponse;
 import com.cookiebytes.calmquest.counselorUser.responses.CounselorStudentResponse;
+import com.cookiebytes.calmquest.ml.StudentFaceEmotion;
+import com.cookiebytes.calmquest.ml.StudentFaceEmotionRepository;
+import com.cookiebytes.calmquest.ml.StudentTextEmotion;
+import com.cookiebytes.calmquest.ml.StudentTextEmotionRepository;
 import com.cookiebytes.calmquest.student.Student;
 import com.cookiebytes.calmquest.student.StudentRepository;
 import com.cookiebytes.calmquest.user.User;
@@ -26,13 +30,18 @@ public class CounselorUserService {
 
     private final AppointmentRepository appointmentRepository;
 
+    private final StudentTextEmotionRepository studentTextEmotionRepository;
+    private final StudentFaceEmotionRepository studentFaceEmotionRepository;
+
     public CounselorUserService(UserRepository userRepository,
                                 StudentRepository studentRepository,
-                                CounselorRepository counselorRepository, AppointmentRepository appointmentRepository) {
+                                CounselorRepository counselorRepository, AppointmentRepository appointmentRepository, StudentTextEmotionRepository studentTextEmotionRepository, StudentFaceEmotionRepository studentFaceEmotionRepository) {
         this.userRepository = userRepository;
         this.studentRepository = studentRepository;
         this.counselorRepository = counselorRepository;
         this.appointmentRepository = appointmentRepository;
+        this.studentTextEmotionRepository = studentTextEmotionRepository;
+        this.studentFaceEmotionRepository = studentFaceEmotionRepository;
     }
 
     public List<CounselorStudentResponse> getAssignedStudents() {
@@ -199,11 +208,40 @@ public class CounselorUserService {
         counselorAppointmentResponse.setStudentRegistrationNumber(appointment.getStudent().getStudentRegistrationNumber());
         counselorAppointmentResponse.setScheduledDateTime(appointment.getScheduledDateTime());
         counselorAppointmentResponse.setVenue(appointment.getVenue());
+        counselorAppointmentResponse.setType(appointment.getType());
 
         return counselorAppointmentResponse;
     }
 
 
+    public List<StudentFaceEmotion> getFaceEmotionInsightsByStudentId(int studentId) {
 
+        User user = getCurrentUser();
+
+        Student student = studentRepository.findById(studentId).get();
+        if (student.getCounselor().getId() != user.getId()) {
+            throw new IllegalArgumentException("This Student is not assigned to you");
+        }
+
+        List<StudentFaceEmotion> studentTextEmotions =  studentFaceEmotionRepository.getStudentFaceEmotionsByStudent(student);
+        for(StudentFaceEmotion studentFaceEmotion:studentTextEmotions)
+            studentFaceEmotion.setStudent(null);
+        return studentTextEmotions;
+    }
+
+    public List<StudentTextEmotion> getTextEmotionInsightsByStudentId(int studentId) {
+
+        User user = getCurrentUser();
+
+        Student student = studentRepository.findById(studentId).get();
+        if (student.getCounselor().getId() != user.getId()) {
+            throw new IllegalArgumentException("This Student is not assigned to you");
+        }
+
+        List<StudentTextEmotion> studentTextEmotions =  studentTextEmotionRepository.getStudentTextEmotionsByStudent(student);
+        for(StudentTextEmotion studentTextEmotion:studentTextEmotions)
+            studentTextEmotion.setStudent(null);
+        return  studentTextEmotions;
+    }
 }
 

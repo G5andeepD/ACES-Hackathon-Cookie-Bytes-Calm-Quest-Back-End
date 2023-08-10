@@ -4,6 +4,7 @@ import com.cookiebytes.calmquest.appointment.Appointment;
 import com.cookiebytes.calmquest.appointment.AppointmentRepository;
 import com.cookiebytes.calmquest.counselor.Counselor;
 import com.cookiebytes.calmquest.counselor.CounselorRepository;
+import com.cookiebytes.calmquest.ml.*;
 import com.cookiebytes.calmquest.student.Student;
 import com.cookiebytes.calmquest.student.StudentRepository;
 import com.cookiebytes.calmquest.studentUser.responses.StudentAppointmentResponse;
@@ -14,6 +15,7 @@ import com.cookiebytes.calmquest.user.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,14 +29,28 @@ public class StudentUserService {
 
     private final AppointmentRepository appointmentRepository;
 
+    private final StudentFaceEmotionRepository studentFaceEmotionRepository;
+
+    private final StudentTextEmotionRepository studentTextEmotionRepository;
+
+    private final MLClient mlClient;
+
     public StudentUserService(UserRepository userRepository,
-                                StudentRepository studentRepository,
-                                CounselorRepository counselorRepository, AppointmentRepository appointmentRepository) {
+                              StudentRepository studentRepository,
+                              CounselorRepository counselorRepository,
+                              AppointmentRepository appointmentRepository,
+                              StudentFaceEmotionRepository studentFaceEmotionRepository,
+                              StudentTextEmotionRepository studentTextEmotionRepository,
+                              MLClient mlClient) {
         this.userRepository = userRepository;
         this.studentRepository = studentRepository;
         this.counselorRepository = counselorRepository;
         this.appointmentRepository = appointmentRepository;
+        this.studentFaceEmotionRepository = studentFaceEmotionRepository;
+        this.studentTextEmotionRepository = studentTextEmotionRepository;
+        this.mlClient = mlClient;
     }
+
 
     public StudentCounselorResponse getCounselor() {
         User user = getCurrentUser();
@@ -173,11 +189,33 @@ public class StudentUserService {
         studentAppointmentResponse.setAppointmentId(appointment.getId());
         studentAppointmentResponse.setScheduledDateTime(appointment.getScheduledDateTime());
         studentAppointmentResponse.setVenue(appointment.getVenue());
+        studentAppointmentResponse.setType(appointment.getType());
 
 
         return studentAppointmentResponse;
     }
 
+    //AI ML Insights
+    public void analyzeText(TextSentimentRequest textSentimentRequest) {
+        User user = getCurrentUser();
+        Student student = studentRepository.findById(user.getId()).get();
+        StudentTextEmotion studentTextEmotion = mlClient.getFullEmotionText(textSentimentRequest);
+        studentTextEmotion.setTime(LocalDateTime.now());
+        studentTextEmotion.setStudent(student);
+        studentTextEmotionRepository.save(studentTextEmotion);
 
+    }
+
+    public void analyzeImage(MultipartFile imageFile) {
+
+        User user = getCurrentUser();
+        Student student = studentRepository.findById(user.getId()).get();
+        StudentFaceEmotion studentFaceEmotion = mlClient.getFullEmotion(imageFile);
+        studentFaceEmotion.setTime(LocalDateTime.now());
+        studentFaceEmotion.setStudent(student);
+        studentFaceEmotionRepository.save(studentFaceEmotion);
+
+
+    }
 
 }

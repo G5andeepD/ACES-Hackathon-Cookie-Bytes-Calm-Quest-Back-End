@@ -14,4 +14,6 @@ public class StudentAppointmentResponse {
     private LocalDateTime scheduledDateTime;
 
     private String venue;
+
+    private String type;
 }
